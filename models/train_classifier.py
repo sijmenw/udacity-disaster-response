@@ -3,14 +3,9 @@ import sys
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
-
+import joblib
 import nltk
 import nltk.tokenize
-from nltk.stem import WordNetLemmatizer
-from nltk.corpus import stopwords
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('stopwords')
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline, FeatureUnion
@@ -20,26 +15,25 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.model_selection import GridSearchCV
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
 
-import joblib
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 
 
 def load_data(database_filepath):
-    engine = create_engine(f'sqlite:///{database_filepath}.db')
+    engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table("disasterset", con=engine)
     X = list(df['message'])
     Y = df.iloc[:, 4:]
     col_names = Y.columns
     Y = np.array(Y)
 
-    # necessary?
-    # because of NaN values in Y, remove indices from 26207
-    X = X[:26207]
-    Y = Y[:26207]
-
     # use subset for speed
-    X = X[:1500]
-    Y = Y[:1500]
+    X = X[:5000]
+    Y = Y[:5000]
 
     return X, Y, col_names
 
