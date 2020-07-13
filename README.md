@@ -1,6 +1,11 @@
 # Disaster Response Pipeline Project
 
+### This repository is made for the Udacity Data Scientist Nanodegree
+
+Implementated using pandas, sklearn, nltk, sqlalchemy and flask.
+
 ### Instructions:
+
 1. Run the following commands in the project's root directory to set up your database and model.
 
     - To run ETL pipeline that cleans data and stores in database
