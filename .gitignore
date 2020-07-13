@@ -1,0 +1,6 @@
+.idea/
+.ipynb_checkpoints
+ETL Pipeline Preparation.ipynb
+ML Pipeline Preparation.ipynb
+data/*.db
+models/*.pkl
