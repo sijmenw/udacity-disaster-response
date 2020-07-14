@@ -54,7 +54,15 @@ def index():
     # extract data needed for visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
-    
+
+    category_counts = list(df[df == 1].sum(axis=0))[4:]
+    category_names = list(df[df == 1].sum(axis=0).index)[4:]
+
+    short_n = df['message'].apply(lambda x: len(x) < 100).sum()
+    long_n = df['message'].apply(lambda x: len(x) >= 100).sum()
+    length_counts = [short_n, long_n]
+    length_names = ['short', 'long']
+
     # create visuals
     graphs = [
         {
@@ -72,6 +80,42 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=category_names,
+                    y=category_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=length_names,
+                    y=length_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Message lengths (over or under 100 characters)',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Length"
                 }
             }
         }
